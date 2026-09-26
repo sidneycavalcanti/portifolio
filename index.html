@@ -11,6 +11,8 @@
 <meta property="og:title" content="Sidney Cavalcanti — back-end PHP e infraestrutura Linux">
 <meta property="og:description" content="Escrevo o sistema e cuido do servidor onde ele roda.">
 <meta property="og:locale" content="pt_BR">
+<meta name="theme-color" content="#0e1519">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230e1519'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='30' font-weight='700' fill='%23e8a54b' text-anchor='middle'%3ESC%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -50,7 +52,14 @@ a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;text-decorati
 code,.mono{font-family:var(--mono);font-size:.86em;letter-spacing:-.01em}
 
 /* ---------- faixa de abertura ---------- */
-.band{background:var(--band);color:var(--band-ink);padding:clamp(2.5rem,7vw,5rem) var(--gutter) clamp(2.25rem,5vw,3.5rem)}
+.band{
+  position:relative;
+  background:
+    radial-gradient(circle,#1c2830 1px,transparent 1px) 0 0/26px 26px,
+    var(--band);
+  color:var(--band-ink);
+  padding:clamp(2.5rem,7vw,5rem) var(--gutter) clamp(2.25rem,5vw,3.5rem);
+}
 .band a{color:#fff}
 .skip{position:absolute;left:-9999px}
 .skip:focus{position:static;display:inline-block;margin-bottom:1rem;color:#fff}
@@ -98,7 +107,24 @@ code,.mono{font-family:var(--mono);font-size:.86em;letter-spacing:-.01em}
   padding:.85rem 0;
   border-top:1px solid #23313a;
 }
-.roster .sys{color:#fff;font-variation-settings:"wdth" 104,"wght" 650}
+.roster .sys{
+  display:flex;align-items:center;gap:.55rem;
+  color:#fff;font-variation-settings:"wdth" 104,"wght" 650;
+}
+.roster .sys::before{
+  content:"";
+  width:.5rem;height:.5rem;border-radius:50%;
+  background:#3fb27f;
+  box-shadow:0 0 0 3px rgba(63,178,127,.22);
+  flex:none;
+}
+@media (prefers-reduced-motion:no-preference){
+  .roster .sys::before{animation:pulse 2.6s ease-in-out infinite}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 3px rgba(63,178,127,.22)}
+    50%{box-shadow:0 0 0 5px rgba(63,178,127,.1)}
+  }
+}
 .roster .what{color:var(--band-ink)}
 .roster .where{font-family:var(--mono);font-size:.8rem;color:#8ba0a8}
 @media (min-width:46rem){
@@ -180,6 +206,15 @@ section:last-of-type{border-bottom:0}
 .contact p{margin:0;max-width:52ch}
 .contact a{font-variation-settings:"wdth" 102,"wght" 600;font-size:clamp(1.05rem,1rem + .5vw,1.3rem)}
 footer{padding:2rem var(--gutter) 3rem;color:var(--ink-soft);font-size:.85rem}
+
+@media print{
+  .band{background:#fff!important;color:#000!important}
+  .band,.band a,.role,.role+p,.roster *{color:#000!important}
+  .roster .sys::before{background:#000;box-shadow:none;animation:none}
+  .audit{border-color:#000}
+  a{text-decoration:none}
+  .skip{display:none}
+}
 </style>
 </head>
 <body>
