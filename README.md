@@ -1,99 +1,27 @@
 # portifolio
 
-Portfólio pessoal de **Sidney Correia Cavalcanti** — desenvolvedor back-end
-PHP e administrador de infraestrutura Linux.
+Portfólio de **Sidney Correia Cavalcanti**, analista de infraestrutura (Recife, PE).
 
-🔗 Produção: https://sidneycavalcanti.github.io/portifolio/
-📧 Contato: sidney.correia.cavalcanti@gmail.com
+## Stack
 
-## O que é isto
-
-Uma página única (`index.html`), escrita à mão em HTML e CSS. Sem
-framework, sem dependência de JavaScript, sem etapa de build. A única
-requisição externa é o carregamento de duas famílias tipográficas
-(Archivo e IBM Plex Mono) via Google Fonts.
-
-O conteúdo é real: os projetos, números e decisões técnicas descritos na
-página vêm de trabalho efetivamente entregue — o LMS do FIRN, a auditoria
-de segurança feita nele, e as VMs de LibreNMS e Xibo em produção.
-
-## Estrutura
-
-```
-.
-├── index.html      # a página inteira: markup + <style> inline
-├── Dockerfile      # imagem nginx:alpine para servir o site estático
-├── nginx.conf      # gzip, headers de segurança, cache de assets, /healthz
-├── .dockerignore
-└── README.md
-```
-
-Não há pasta `src/`, `dist/` nem `assets/` porque não há nada para
-compilar ou empacotar — o arquivo que está no repositório é o arquivo que
-vai para produção.
-
-## Rodar localmente
-
-Qualquer servidor estático serve. Sem instalar nada além do Python (já
-vem no Windows/macOS/Linux):
-
-```bash
-python -m http.server 8000
-# abrir http://localhost:8000/
-```
-
-Ou abrir `index.html` direto no navegador — a página não depende de rota
-nem de servidor para funcionar.
-
-## Deploy
-
-### Coolify (produção)
-
-O repositório já tem `Dockerfile` + `nginx.conf` prontos. No Coolify:
-
-1. **New Resource → Public Repository** (ou conectar via GitHub App)
-   apontando para `https://github.com/sidneycavalcanti/portifolio.git`,
-   branch `main`.
-2. Build pack: **Dockerfile** (detectado automaticamente pelo arquivo na
-   raiz).
-3. Porta exposta: **80**.
-4. Healthcheck: `GET /healthz` → `200 ok`.
-5. Deploy.
-
-O nginx dentro do container já vem configurado com:
-
-- **gzip** para HTML/CSS/SVG;
-- **cache agressivo** (30 dias, `immutable`) para imagens e fontes locais,
-  caso sejam adicionadas depois;
-- **`Cache-Control: no-cache`** no HTML, porque é página única sem hash
-  no nome do arquivo — uma atualização precisa aparecer na hora, não
-  ficar presa em cache de navegador;
-- **headers de segurança básicos** (`X-Content-Type-Options`,
-  `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`), coerentes
-  com o tipo de trabalho mostrado na própria página.
-
-### GitHub Pages (alternativa)
-
-Também publica sem nenhum arquivo extra, direto do branch:
-
-`Settings → Pages → Source: Deploy from a branch → main → / (root)`.
+- [Astro](https://astro.build) gerando HTML estático (o único JS no cliente é o contador de uptime e o scroll-spy, ~1 KB)
+- CSS nativo moderno, sem framework de CSS: `light-dark()` para tema claro/escuro automático, nesting, `oklch`/`color-mix`, `:focus-visible`, `<details name>` com animação via `::details-content` + `interpolate-size`
+- nginx servindo `dist/` (Docker multi-stage, pronto para o Coolify)
 
 ## Editar conteúdo
 
-Tudo — texto, cores, tipografia, layout — está em `index.html`. Os pontos
-mais prováveis de mudança:
+Todo o texto está em `src/data/cv.ts` (perfil, experiências, entregas, competências, formação).
+Layout em `src/pages/index.astro`, estilos em `src/styles/global.css`.
 
-- **Projetos**: cada `<article class="item">` (ou `.audit` para o bloco
-  de destaque) dentro de `<section>` → `Trabalho`.
-- **Paleta**: variáveis no topo do `<style>`, em `:root` (`--band`,
-  `--signal`, `--signal-lift` são as cores de identidade).
-- **Sistemas no roster do topo**: lista `<ul>` dentro de `.roster`, no
-  `<header>`.
+## Rodar localmente
 
-Depois de qualquer mudança de conteúdo, revisar o `<meta name="description">`
-e as tags `og:*` no `<head>` — elas não se atualizam sozinhas.
+```bash
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # gera dist/
+```
 
-## Licença
+## Deploy (Coolify)
 
-Conteúdo pessoal (texto e identidade visual) — não reaproveitar. O HTML/CSS
-como código pode servir de referência livremente.
+Build pack **Dockerfile**, porta **80**, healthcheck `GET /healthz`.
+O Dockerfile builda com Node e copia só `dist/` para o nginx.

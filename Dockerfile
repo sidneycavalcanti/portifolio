@@ -1,12 +1,13 @@
-# Site estatico (HTML/CSS puro, sem build) servido por nginx.
-# Pensado para deploy direto no Coolify: ele detecta este Dockerfile
-# e builda/publica sem configuracao extra.
+# Etapa 1: gera o site estático com Astro
+FROM node:24-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Etapa 2: nginx só com o HTML/CSS gerado em dist/
 FROM nginx:1.27-alpine
-
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY index.html /usr/share/nginx/html/index.html
-
-# nginx:alpine ja roda como usuario nao-root ("nginx") por padrao nas
-# imagens recentes; nao precisa de USER/HEALTHCHECK aqui porque o
-# Coolify faz seu proprio healthcheck HTTP contra a porta exposta.
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80

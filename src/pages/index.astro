@@ -1,0 +1,210 @@
+---
+import "../styles/global.css";
+import { profile, jobs, skills, highlights, education, certs, languages } from "../data/cv";
+
+const title = `${profile.name} | ${profile.role}`;
+const description =
+  "Analista de infraestrutura em Recife, em TI desde 2014:  VMware, Proxmox, Veeam, redes, Microsoft 365 e automação com Ansible, Zabbix e Grafana.";
+const nav = [
+  ["sobre", "Sobre"],
+  ["experiencia", "Experiência"],
+  ["entregas", "Entregas"],
+  ["competencias", "Competências"],
+  ["formacao", "Formação"],
+];
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={profile.fullName} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={profile.pitch} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#e4e7ea" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#15191d" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2323292f'/%3E%3Crect x='12' y='16' width='40' height='9' rx='2' fill='%23e4e7ea'/%3E%3Crect x='12' y='30' width='40' height='9' rx='2' fill='%23e4e7ea'/%3E%3Ccircle cx='46' cy='48' r='5' fill='%2334c759'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: profile.fullName,
+      jobTitle: profile.role,
+      email: `mailto:${profile.email}`,
+      address: { "@type": "PostalAddress", addressLocality: "Recife", addressRegion: "PE", addressCountry: "BR" },
+      sameAs: [profile.linkedin, profile.github],
+    })} />
+  </head>
+  <body>
+    <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+    <div class="page">
+      <header class="side">
+        <div>
+          <h1 class="name">{profile.name}</h1>
+          <p class="role">{profile.role}<br /><span>{profile.city}</span></p>
+          <p class="pitch">{profile.pitch}</p>
+
+          <figure class="uptime" data-since={profile.since}>
+            <figcaption><span class="led on" aria-hidden="true"></span> Uptime de carreira</figcaption>
+            <p class="uptime-days" aria-live="off">12 anos</p>
+            <p class="uptime-clock" aria-hidden="true">00:00:00</p>
+          </figure>
+
+          <nav class="toc" aria-label="Seções">
+            <ul>
+              {nav.map(([id, label]) => (
+                <li><a href={`#${id}`}>{label}</a></li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+
+        <ul class="contact">
+          <li><a class="btn" href={`mailto:${profile.email}`}>Enviar e-mail</a></li>
+          <li><a href={profile.linkedin} rel="me noopener" target="_blank">LinkedIn</a></li>
+          <li><a href={profile.github} rel="me noopener" target="_blank">GitHub</a></li>
+        </ul>
+      </header>
+
+      <main id="conteudo">
+        <section id="sobre" aria-labelledby="h-sobre">
+          <h2 id="h-sobre">Sobre</h2>
+          {profile.about.map((p) => <p>{p}</p>)}
+        </section>
+
+        <section id="experiencia" aria-labelledby="h-exp">
+          <h2 id="h-exp">Experiência</h2>
+          <p class="hint">Cada empresa é uma unidade do rack. Clique para abrir os detalhes.</p>
+          <div class="rack">
+            {jobs.map((job) => (
+              <details class="unit" open={!job.end} name={job.end ? "unit" : undefined}>
+                <summary>
+                  <span class={`led ${job.end ? "" : "on"}`} aria-hidden="true"></span>
+                  <span class="tape">{job.company}</span>
+                  <span class="unit-role">
+                    {job.role}
+                    {job.note && <small>{job.note}</small>}
+                  </span>
+                  <time class="unit-when">{job.start} – {job.end ?? "hoje"}</time>
+                </summary>
+                <div class="unit-body">
+                  <p class="unit-summary">{job.summary}</p>
+                  <ul class="bullets">
+                    {job.bullets.map((b) => <li>{b}</li>)}
+                  </ul>
+                  <ul class="chips" aria-label="Ferramentas">
+                    {job.stack.map((s) => <li>{s}</li>)}
+                  </ul>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <section id="entregas" aria-labelledby="h-ent">
+          <h2 id="h-ent">Entregas que eu destacaria</h2>
+          <ol class="wins">
+            {highlights.map((h) => (
+              <li>
+                <h3>{h.title}</h3>
+                <p>{h.text}</p>
+                <ul class="chips" aria-label="Ferramentas">
+                  {h.tools.map((t) => <li>{t}</li>)}
+                </ul>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section id="competencias" aria-labelledby="h-comp">
+          <h2 id="h-comp">Competências</h2>
+          <p class="hint">Agrupadas como num patch panel: cada cor de cabo é uma área.</p>
+          <div class="panel">
+            {skills.map((g) => (
+              <div class="port-group" style={`--cable: var(--cable-${g.cable})`}>
+                <h3>{g.name}</h3>
+                <ul>
+                  {g.items.map((i) => <li>{i}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="formacao" aria-labelledby="h-form">
+          <h2 id="h-form">Formação e certificações</h2>
+          <ul class="edu">
+            {education.map((e) => (
+              <li><span>{e.course}<small>{e.school}</small></span><time>{e.year}</time></li>
+            ))}
+          </ul>
+          <h3 class="sub">Certificações e cursos</h3>
+          <ul class="certs">
+            {certs.map((c) => <li>{c}</li>)}
+          </ul>
+          <h3 class="sub">Idiomas</h3>
+          <ul class="edu">
+            {languages.map((l) => (
+              <li><span>{l.name}<small>{l.level}</small></span></li>
+            ))}
+          </ul>
+        </section>
+
+        <footer class="foot">
+          <p>
+            Precisa de alguém para cuidar da sua infraestrutura?
+            <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          </p>
+          <p class="small">Feito com Astro e CSS moderno, servido por nginx.</p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      // contador de uptime: tempo desde o primeiro emprego em TI
+      const fig = document.querySelector<HTMLElement>(".uptime")!;
+      const start = new Date(fig.dataset.since!);
+      const days = fig.querySelector(".uptime-days")!;
+      const clock = fig.querySelector(".uptime-clock")!;
+      const pad = (n: number) => String(n).padStart(2, "0");
+      const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+
+      function tick() {
+        const now = new Date();
+        let y = now.getFullYear() - start.getFullYear();
+        let m = now.getMonth() - start.getMonth();
+        let d = now.getDate() - start.getDate();
+        if (d < 0) { m--; d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+        if (m < 0) { y--; m += 12; }
+        days.textContent = `${plural(y, "ano", "anos")}, ${plural(m, "mês", "meses")}, ${plural(d, "dia", "dias")}`;
+        const sec = Math.floor((now.getTime() - start.getTime()) / 1000) % 86400;
+        clock.textContent = `${pad(Math.floor(sec / 3600))}:${pad(Math.floor(sec / 60) % 60)}:${pad(sec % 60)}`;
+      }
+      tick();
+      setInterval(tick, 1000);
+
+      // scroll-spy: marca na navegação a seção que está na tela
+      const links = new Map(
+        [...document.querySelectorAll<HTMLAnchorElement>(".toc a")].map((a) => [a.hash.slice(1), a]),
+      );
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            links.forEach((a) => a.removeAttribute("aria-current"));
+            links.get(e.target.id)?.setAttribute("aria-current", "true");
+          }
+        },
+        { rootMargin: "-40% 0px -55% 0px" },
+      );
+      links.forEach((_, id) => io.observe(document.getElementById(id)!));
+    </script>
+  </body>
+</html>
