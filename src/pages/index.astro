@@ -11,6 +11,7 @@ const nav = [
   ["entregas", "Entregas"],
   ["competencias", "Competências"],
   ["formacao", "Formação"],
+  ["dev", "Como Dev"],
 ];
 ---
 
@@ -155,6 +156,70 @@ const nav = [
               <li><span>{l.name}<small>{l.level}</small></span></li>
             ))}
           </ul>
+        </section>
+
+        <section id="dev" aria-labelledby="h-dev">
+          <h2 id="h-dev">Meus Projetos & Experiência como Desenvolvedor</h2>
+          
+          <div class="projects-section">
+            <h3>Projetos Destacados</h3>
+            <ul class="project-list">
+              <li>
+                <a href="https://github.com/sidneycavalcanti" target="_blank" rel="noopener noreferrer">
+                  Infraestrutura Automatizada com Ansible no Grupo Pontes
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/sidneycavalcanti" target="_blank" rel="noopener noreferrer">
+                  Dashboard de Monitoramento Grafana & Zabbix
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/sidneycavalcanti" target="_blank" rel="noopener noreferrer">
+                  Sistema de Controle de Escala para Exército Brasileiro
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/sidneycavalcanti" target="_blank" rel="noopener noreferrer">
+                  Inventário Automatizado com Ansible
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="git-section">
+            <h3 id="h-git">Git & GitHub</h3>
+            
+            <div class="github-cta">
+              <a href={profile.github} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                Acessar meu GitHub
+              </a>
+              <p class="github-desc">
+                Você pode encontrar meus projetos, scripts e contribuições no meu perfil.
+              </p>
+            </div>
+
+            <div class="git-practices">
+              <h4>Minhas Práticas de Versionamento</h4>
+              <ul class="git-bullets">
+                <li>Uso <code>Git Flow</code> para projetos com múltiplos releases e branches de feature</li>
+                <li>Mainteno commits atômicos e mensagens descritivas seguindo o <a href="https://www.conventionalcommits.org/" target="_blank" rel="noopener noreferrer">Conventional Commits</a></li>
+                <li>Realizo code reviews antes de mergear para branches principais</li>
+                <li>Uso GitHub Actions para CI/CD em projetos open source</li>
+                <li>Mainteno documentação em README.md para cada repositório</li>
+              </ul>
+            </div>
+
+            <div class="git-access">
+              <h4>Acesso aos Meus Repositórios</h4>
+              <p>Meus repositórios públicos estão disponíveis no GitHub. Para projetos específicos ou colaboração, entre em contato.</p>
+              <ul class="repo-links">
+                <li><strong>Repositórios Públicos:</strong> Disponível para consulta e contribuição</li>
+                <li><strong>Licenças:</strong> MIT para código open source</li>
+                <li><strong>Contribuições:</strong> Bem-vindas! Aberto a pull requests e issues</li>
+              </ul>
+            </div>
+          </div>
         </section>
 
         <footer class="foot">
