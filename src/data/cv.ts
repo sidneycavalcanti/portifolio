@@ -48,8 +48,9 @@ export const jobs: Job[] = [
       "DNS no Cloudflare e registro de domínios no Registro.br.",
       "Projetos de infraestrutura para o Summer Ville e para os eventos do grupo.",
       "Coordeno reuniões de TI entre as empresas: migração de e-mail, backup/DR e hospedagem na AWS.",
+      "Administro o GLPI (sysadmin) e configuro os firewalls Fortigate das unidades.",
     ],
-    stack: ["VMware vCenter", "Veeam", "Microsoft 365", "Ansible", "Grafana", "GLPI", "Cloudflare", "AWS"],
+    stack: ["VMware vCenter", "Veeam", "Microsoft 365", "Ansible", "Grafana", "GLPI", "Fortigate", "Cloudflare", "AWS"],
   },
   {
     company: "Shopee",
@@ -174,6 +175,35 @@ export const highlights = [
     title: "Mudança de CPD sem parar o shopping",
     text: "Migrei o CPD do Plaza Shopping Casa Forte e implantei o Wi-Fi corporativo Ruckus com a operação das lojas funcionando.",
     tools: ["Ruckus", "Cabeamento", "Planejamento"],
+  },
+];
+
+// seção "Dev": projetos práticos, do trabalho e do lab em casa
+export const dev = [
+  {
+    title: "Lab de IA em casa, do hardware ao bot",
+    text: "Proxmox com uma RX 580 em passthrough rodando LLM local (Qwen3.5 9B no llama.cpp com Vulkan): de 5 para 24 tokens/s saindo da CPU. Em cima disso, um assistente no Telegram feito no n8n que lê PDF e imagem, gera PDF, consulta Gmail e agenda e cria e hospeda sistemas em Docker por SSH. Um roteador LiteLLM troca sozinho entre IAs gratuitas quando uma falha, e o Open WebUI dá a interface de chat.",
+    tools: ["Proxmox", "GPU passthrough", "llama.cpp", "n8n", "LiteLLM", "Open WebUI", "Docker"],
+  },
+  {
+    title: "Self-hosting e backup do lab",
+    text: "Coolify publica os sites do lab (inclusive este) atrás de Cloudflare. Os backups do Proxmox saem todo dia para o Google Drive com rclone, e um runbook testado recriou a VM de aplicações inteira depois de uma falha de disco.",
+    tools: ["Coolify", "Cloudflare", "rclone", "Proxmox Backup", "Ansible", "Terraform"],
+  },
+  {
+    title: "Dashboards no Grafana",
+    text: "No Grupo Pontes, dashboards de infraestrutura, inventário de ativos e satisfação de atendimento, para a equipe e para a gestão enxergarem o ambiente sem pedir relatório.",
+    tools: ["Grafana", "GLPI", "Zabbix"],
+  },
+  {
+    title: "GLPI como sysadmin",
+    text: "Administração do GLPI de ponta a ponta: chamados, inventário automático via agente e indicadores de satisfação que alimentam os dashboards.",
+    tools: ["GLPI", "Inventário", "ITIL"],
+  },
+  {
+    title: "Projetos de infraestrutura e Fortigate",
+    text: "Projetos de infraestrutura para o Summer Ville e para os eventos do grupo, com configuração e administração de firewalls Fortigate nas unidades.",
+    tools: ["Fortigate", "Redes", "Projetos"],
   },
 ];
 

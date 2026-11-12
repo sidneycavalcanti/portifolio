@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { profile, jobs, skills, highlights, education, certs, languages } from "../data/cv";
+import { profile, jobs, skills, highlights, dev, education, certs, languages } from "../data/cv";
 
 const title = `${profile.name} | ${profile.role}`;
 const description =
@@ -9,6 +9,7 @@ const nav = [
   ["sobre", "Sobre"],
   ["experiencia", "Experiência"],
   ["entregas", "Entregas"],
+  ["dev", "Dev"],
   ["competencias", "Competências"],
   ["formacao", "Formação"],
 ];
@@ -117,6 +118,22 @@ const nav = [
                 <p>{h.text}</p>
                 <ul class="chips" aria-label="Ferramentas">
                   {h.tools.map((t) => <li>{t}</li>)}
+                </ul>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section id="dev" aria-labelledby="h-dev">
+          <h2 id="h-dev">Dev: lab e projetos</h2>
+          <p class="hint">O que eu construo na prática, no trabalho e no lab de casa.</p>
+          <ol class="wins">
+            {dev.map((d) => (
+              <li>
+                <h3>{d.title}</h3>
+                <p>{d.text}</p>
+                <ul class="chips" aria-label="Ferramentas">
+                  {d.tools.map((t) => <li>{t}</li>)}
                 </ul>
               </li>
             ))}
